@@ -364,3 +364,24 @@ if(EXISTS ${${PLUGIN_NAME}_SOURCE_DIR}/Data/${PLUGIN_NAME})
 endif()
 # -- Include the GUI Plugin codes
 include(${${PLUGIN_NAME}_SOURCE_DIR}/Gui/CMakeLists.txt)
+
+if(CMAKE_GENERATOR STREQUAL "Ninja")
+  option(ITKImageProcessing_USE_JOB_POOL "Forces ItkImageProcessing to use a job pool. Only intended to be used for memory limited CI build. Requires Ninja." OFF)
+  mark_as_advanced(FORCE ITKImageProcessing_USE_JOB_POOL)
+endif()
+
+if(ITKImageProcessing_USE_JOB_POOL)
+  if(NOT CMAKE_GENERATOR STREQUAL "Ninja")
+    message(FATAL_ERROR "ITKImageProcessing_USE_JOB_POOL requires Ninja as the generator.")
+  endif()
+
+  set(ITKImageProcessing_JOB_POOL 2 CACHE STRING "Number of threads for ITKImageProcessing job pools")
+  mark_as_advanced(FORCE ITKImageProcessing_JOB_POOL)
+
+  set_property(GLOBAL APPEND PROPERTY JOB_POOLS itk_pool=${ITKImageProcessing_JOB_POOL})
+
+  set_target_properties(${plug_target_name}
+    PROPERTIES
+      JOB_POOL_COMPILE itk_pool
+  )
+endif()
