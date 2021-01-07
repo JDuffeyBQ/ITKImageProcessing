@@ -375,8 +375,16 @@ if(ITKImageProcessing_USE_JOB_POOL)
     message(FATAL_ERROR "ITKImageProcessing_USE_JOB_POOL requires Ninja as the generator.")
   endif()
 
-  set(ITKImageProcessing_JOB_POOL 2 CACHE STRING "Number of threads for ITKImageProcessing job pools")
+  include(ProcessorCount)
+  ProcessorCount(thread_count)
+
+  # Guess job count as half the number of threads
+  math(EXPR itk_job_count "${thread_count} / 2")
+
+  set(ITKImageProcessing_JOB_POOL ${itk_job_count} CACHE STRING "Number of threads for ITKImageProcessing job pools")
   mark_as_advanced(FORCE ITKImageProcessing_JOB_POOL)
+
+  message(STATUS "itk_job_count: ${itk_job_count}")
 
   set_property(GLOBAL APPEND PROPERTY JOB_POOLS itk_pool=${ITKImageProcessing_JOB_POOL})
 
