@@ -384,7 +384,7 @@ if(ITKImageProcessing_USE_JOB_POOL)
   set(ITKImageProcessing_JOB_POOL ${itk_job_count} CACHE STRING "Number of threads for ITKImageProcessing job pools")
   mark_as_advanced(FORCE ITKImageProcessing_JOB_POOL)
 
-  message(STATUS "itk_job_count: ${itk_job_count}")
+  message(STATUS "ITKImageProcessing_JOB_POOL: ${ITKImageProcessing_JOB_POOL}")
 
   set_property(GLOBAL APPEND PROPERTY JOB_POOLS itk_pool=${ITKImageProcessing_JOB_POOL})
 
