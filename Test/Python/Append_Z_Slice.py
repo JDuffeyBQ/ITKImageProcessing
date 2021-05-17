@@ -2,12 +2,12 @@
 # Tests the Append Z Slice filter
 # These are the simpl_py python modules
 
-import simpl
+from dream3d import simpl
+from dream3d import itkimageprocessing
+from dream3d import itkimageprocessingpy
+from dream3d import samplingpy
 import simpl_helpers as sh
 import simpl_test_dirs as sd
-import itkimageprocessing
-import itkimageprocessingpy
-import samplingpy
 
 def append_z_slice():
     # Create Data Container Array

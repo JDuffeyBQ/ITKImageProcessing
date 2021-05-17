@@ -172,13 +172,15 @@ set(PREBUILT_PIPELINE_NAMES
 
 )
 if(ITK_VERSION_MAJOR EQUAL 5)
-  set(PREBUILT_PIPELINE_NAMES
-    ${PREBUILT_PIPELINE_NAMES}
-    "AxioVisionV4Import"
-    "Fiji_Import"
-    "ZenInfoImport"
-    "RobometImport"
-  )
+  if(ITKImageProcessing_ENABLE_ITK_MONTAGE)
+    set(PREBUILT_PIPELINE_NAMES
+      ${PREBUILT_PIPELINE_NAMES}
+      "AxioVisionV4Import"
+      "Fiji_Import"
+      "ZenInfoImport"
+      "RobometImport"
+    )
+  endif()
 endif()
 
 set(PREBUILT_SUPPORT_DIR "${${PLUGIN_NAME}_SOURCE_DIR}/ExamplePipelines/${PLUGIN_NAME}")
